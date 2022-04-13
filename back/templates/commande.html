@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="x-apple-disable-message-reformatting">
+        <title></title>
+        <!--[if mso]>
+        <noscript>
+                <xml>
+                        <o:OfficeDocumentSettings>
+                                <o:PixelsPerInch>96</o:PixelsPerInch>
+                        </o:OfficeDocumentSettings>
+                </xml>
+        </noscript>
+        <![endif]-->
+        <style>
+                table, td, div, h1, p {font-family: Arial, sans-serif;}
+        </style>
+</head>
+<body style="margin:0;padding:0;">
+        <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+                <tr>
+                        <td align="center" style="padding:0;">
+                                <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
+                                        <tr>
+                                                <td align="center" style="padding:0;background:#b01010;" style="background:url("https://sauron-securite.fr/static/None/commandemail.jpg");">
+                                                        <img src="https://sauron-securite.fr/static/None/commandemail.JPG"  alt=""  style="width:100%;height:auto;display:block;" />
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td align="center" style="padding:40px 0 30px 0;background:#000000;">
+                                                        <img src="https://sauron-securite.fr/static/None/sauron-securite-logo.png"  alt="" style="width:80px;height:auto;display:block;" />
+                                                        <h2 class="text-white" style="color:white;">Sauron Securite</h2>
+                                                        <h3 class="text-white" style="color:white;">Gardez un oeil sur ceux qui vous est précieux</h3>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td style="padding:36px 30px 42px 30px;">
+                                                        <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                                                                <tr>
+                                                                        <td style="padding:0 0 36px 0;color:#153643;">
+                                                                                <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Merci, pour votre commande {{ user.first_name }}</h1>
+                                                                                <h2 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Le numéro de commande est: FRSAURON000{{ commande.id }}, voici le détail:</h2>
+
+            <div class="d-flex container-fluid container-lg justify-content-center">
+              <div class="row w-100 d-flex justify-content-center justify-content-lg-between">
+        <div class="col-xs-12 col-lg-8 mx-0">
+                {% for produit in produit_list %}
+        <div class="d-flex container-fluid ">
+            <div class="panier-item row p-3 d-flex align-items-center w-100 bg-white my-3 shadow-sm ">
+                <div class="col-xs-12 col-lg-5 ">
+                  <img src="https://sauron-securite.fr/static/{{produit.produit.image1}}" alt="" class="panier-item-img" style="width:120px;">
+                  <div class="panier-item-description d-flex flex-column justify-content-start">
+                    <h5 class="my-1">{{produit.produit.nom}}</h5>
+                    <small class="panier-item-livraison">{{produit.produit.description}}</small>
+                  </div>
+              </div>
+               <div class="col-xs-12 col-lg-7 p-0">
+                  <div class="d-flex align-items-center justify-content-between">
+  
+                    <div class="d-flex flex-column align-items bg-transparent fit">
+                      <strong class="price fit">{{produit.produit.prix}}x{{produit.quantite}} <span id="{{produit.id}}b" class="text-danger"></span><span class="text-danger">{{produit.total}}€</span></strong>
+                    </div>
+                  </div>
+  
+               </div>
+  
+            </div>
+  </div>
+              {% endfor %}
+  </div>
+  
+          <div class="col-xs-12 col-lg-4">
+            <div class=" mx-4 bg-white my-3 p-2 d-flex flex-column shadow-sm">
+              <h5 class="text-capitalize fw-bolder my-2">
+                Informations sur la livraison
+              </h5>
+              <h6 class="text-capitalize fw-bold">
+                Lieux de livraison:
+              </h6>
+              <p><span>{{user.first_name}}</span>  <span>{{user.last_name}}</span></p>
+              <p><span class="text-grey">Adresse: </span> <span>{{profile.adresse}}</span></p>
+              <p><span class="text-grey">Ville: </span> <span>{{profile.ville}}</span></p>
+              <p><span class="text-grey">Code postal: </span> <span>{{profile.code_postal}}</span></p>
+              <p><span class="text-grey">Pays: </span> <span>{{profile.pays}}</span></p>
+              <h6 class="text-capitalize fw-bold">
+                Delai de livraison:
+              </h6>
+              <p>{{livraison.type.delai}}</p>
+              <h6 class="text-capitalize fw-bold">
+                Effecuter par:
+              </h6>
+              <div>
+              <img src="https://sauron-securite.fr/static/{{livraison.type.image}}" class="icon-l" style="width:80px;">
+              </div>
+              </div>
+         </div>
+         <div class="w-100 d-flex px-5 mx-5 mt-4 flex-column container">
+            {% if r %}
+            <h4 class="display- text-danger"><span>Sous-total: </span> <del>{{panier.totaltotal|floatformat:2}}€</del></h4>
+            <h4 class="display- text-danger"><span>Avec le code {{promo.nom}}: </span> -{{red|floatformat:2 }}€</h4>
+            <h4 class="text-secondary">Sous-total avec reduction: {{panier.totaltotal|floatformat:2}}€<span></span></h4>
+                    {% if gratuit %}
+            <h4 class="display- text-danger"><span>Montant de la livraison: </span> <del>{{livraison.prix|floatformat:2}}€</del> GRATUIT</h4>
+                    {% else %}
+            <h4 class="display- text-secondary"><span>Montant de la livraison: </span> {{livraison.prix|floatformat:2}}€</h4>
+                    {% endif %}
+            <h4 class="display- text-dark"><span>Montant de la commande: </span> {{panier.totalaveclivraison|floatformat:2 }}€</h4>
+            {% else %}
+            <h4 class="display- text-secondary"><span>Sous-total: </span> {{panier.totaltotal|floatformat:2 }}€</h4>
+                    {% if gratuit %}
+            <h4 class="display- text-danger"><span>Montant de la livraison: </span> <del>{{livraison.prix|floatformat:2}}€</del> GRATUIT</h4>
+                    {% else %}
+            <h4 class="display- text-secondary"><span>Montant de la livraison: </span> {{livraison.prix|floatformat:2}}€</h4>
+                    {% endif %}
+            <h4 class="display- text-dark"><span>Montant de la commande: </span> {{panier.totalaveclivraison|floatformat:2 }}€</h4>
+            {% endif %}
+            </div>
+
+</div>
+</div>
+<p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Merci encore et bonne journée à vous {{ user.first_name }} {{ user.last_name }}</p>
+</td>
+</tr>
+<tr>
+<td style="padding:0;">
+        <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+        </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td style="padding:30px;background:#b01010;">
+<table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
+<tr>
+<td style="padding:0;width:50%;" align="left">
+        <p style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
+                &reg; Sauron Securite 2021<br/><a href="https://sauron-securite.com" style="color:#ffffff;text-decoration:underline;">www.sauron-securite.com</a>
+        </p>
+</td>
+<td style="padding:0;width:50%;" align="right">
+        <table role="presentation" style="border-collapse:collapse;border:0;border-spacing:0;">
+                <tr>
+                        <td style="padding:0 0 0 10px;width:38px;">
+                                <a href="http://www.twitter.com/" style="color:#ffffff;"><img src="images/tw.png" alt="Twitter" width="38" style="height:auto;displa>
+                        </td>
+                        <td style="padding:0 0 0 10px;width:38px;">
+                                <a href="http://www.facebook.com/" style="color:#ffffff;"><img src="images/fb.png" alt="Facebook" width="38" style="height:auto;disp>
+                        </td>
+                </tr>
+        </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
